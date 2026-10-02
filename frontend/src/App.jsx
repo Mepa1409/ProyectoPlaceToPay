@@ -6,17 +6,50 @@ const products = [
     {
         id: 1,
         name: 'Play Station 5',
-        price: 5000000
+        price: 5000000,
+        icon: '🎮'
     },
     {
         id: 2,
         name: 'Televisor Smart TV FULL HD 4K',
-        price: 1300000
+        price: 1300000,
+        icon: '📺'
     },
     {
         id: 3,
-        name: 'GTA VI ',
-        price: 480000
+        name: 'GTA VI',
+        price: 480000,
+        icon: '🎮'
+    },
+    {
+        id: 4,
+        name: 'iPhone 17 Promax',
+        price: 4200000,
+        icon: '📱'
+    },
+    {
+        id: 5,
+        name: 'MacBook Air',
+        price: 5200000,
+        icon: '💻'
+    },
+    {
+        id: 6,
+        name: 'Audífonos inalámbricos',
+        price: 350000,
+        icon: '🎧'
+    },
+    {
+        id: 7,
+        name: 'Apple Watch',
+        price: 1800000,
+        icon: '⌚'
+    },
+    {
+        id: 8,
+        name: 'Control inalámbrico',
+        price: 280000,
+        icon: '🕹️'
     }
 ];
 
@@ -122,63 +155,61 @@ function App() {
         setError('');
     };
 
-const handlePayment = async () => {
-    setError('');
+    const handlePayment = async () => {
+        setError('');
 
-    if (
-        !payer.name ||
-        !payer.surname ||
-        !payer.document ||
-        !payer.email ||
-        !payer.mobile
-    ) {
-        setError('Por favor completa todos los campos.');
-        return;
-    }
+        if (
+            !payer.name ||
+            !payer.surname ||
+            !payer.document ||
+            !payer.email ||
+            !payer.mobile
+        ) {
+            setError('Por favor completa todos los campos.');
+            return;
+        }
 
-    if (cart.length === 0) {
-        setError('El carrito está vacío.');
-        return;
-    }
+        if (cart.length === 0) {
+            setError('El carrito está vacío.');
+            return;
+        }
 
-    try {
-        setLoading(true);
+        try {
+            setLoading(true);
 
-        console.log('Datos enviados al backend:', {
-            payer,
-            items: cart
-        });
-
-        const response = await axios.post(
-            'http://localhost:3000/api/payment',
-            {
+            console.log('Datos enviados al backend:', {
                 payer,
                 items: cart
-            }
-        );
+            });
 
-       
-        console.log('Respuesta del backend:', response.data);
+            const response = await axios.post(
+                'http://localhost:3000/api/payment',
+                {
+                    payer,
+                    items: cart
+                }
+            );
 
+            console.log('Respuesta del backend:', response.data);
 
-        window.location.href = response.data.processUrl;
+            window.location.href = response.data.processUrl;
 
-    } catch (error) {
-        console.error('Error al crear la sesión de pago:', error);
+        } catch (error) {
+            console.error('Error al crear la sesión de pago:', error);
 
-        console.error(
-            'Respuesta del backend:',
-            error.response?.data
-        );
+            console.error(
+                'Respuesta del backend:',
+                error.response?.data
+            );
 
-        setError(
-            error.response?.data?.error ||
-            'No fue posible crear la sesión de pago.'
-        );
+            setError(
+                error.response?.data?.error ||
+                'No fue posible crear la sesión de pago.'
+            );
 
-        setLoading(false);
-    }
-};
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="app">
@@ -186,9 +217,10 @@ const handlePayment = async () => {
             <header className="header">
 
                 <div>
-                    <h1>Mi Tienda</h1>
+                    <h1>Tienda De Miguel</h1>
+
                     <p>
-                        Compra de forma rápida y segura
+                        Para conseguir un buen empleo!
                     </p>
                 </div>
 
@@ -220,7 +252,7 @@ const handlePayment = async () => {
                                 >
 
                                     <div className="product-image">
-                                        🛍️
+                                        {product.icon}
                                     </div>
 
                                     <h3>
